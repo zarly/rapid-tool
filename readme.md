@@ -12,4 +12,5 @@ npm install -g rapid-tool
 
 ```
 rapid-tool repo - инициализировать новый NodeJS-проект
+rapid-tool api - инициализировать новое API
 ```

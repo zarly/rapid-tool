@@ -1,0 +1,24 @@
+
+# Generated
+dist/
+coverage/
+
+#IDE
+.idea
+.vscode
+*~
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Mac OSX Finder files.
+**/.DS_Store
+.DS_Store
+
+# Other
+tmp/
+*.nohup
+*.log
+*.tmp
+*.pid
