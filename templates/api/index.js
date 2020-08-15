@@ -12,7 +12,7 @@ exports.getConfig = function getConfig (args) {
             { input: './.gitignore.ejs', output: `@/${name}/.gitignore` },
             { input: './package.json.ejs', output: `@/${name}/package.json` },
             { input: './package-lock.json.ejs', output: `@/${name}/package-lock.json` },
-            { cmd: `git init && git add . && git commit -m init` },
+            { cmd: `cd ${name} && git init && git add . && git commit -m init && cd -` },
         ],
     };
 };
