@@ -9,9 +9,14 @@ export type Endpoint = {
     handler: Handler,
 };
 
-export function start (endpoints: Endpoint[]) {
+export interface StartOptions {
+  silent?: boolean;
+}
+
+export const PORT = process.env.PORT || 8080;
+
+export function start (endpoints: Endpoint[], options: StartOptions) {
     const app = express();
-    const PORT = 8080;
     
     app.get('/', (req: Request, res: Response) => res.send('Express + TypeScript Server'));
     
@@ -19,7 +24,9 @@ export function start (endpoints: Endpoint[]) {
 
     endpoints.forEach(({method, path, handler}) => app[method](path, handler));
     
-    app.listen(PORT, () => {
-      console.log(`Server is running at https://localhost:${PORT}`);
+    const server = app.listen(PORT, () => {
+      if (!options.silent) console.log(`Server is running at http://localhost:${PORT}`);
     });
+
+    return server;
 }
