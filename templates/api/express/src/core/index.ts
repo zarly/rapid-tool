@@ -15,7 +15,7 @@ export interface StartOptions {
 
 export const PORT = process.env.PORT || 8080;
 
-export function start (endpoints: Endpoint[], options: StartOptions) {
+export function start (endpoints: Endpoint[], options: StartOptions = {}) {
     const app = express();
     
     app.get('/', (req: Request, res: Response) => res.send('Express + TypeScript Server'));
