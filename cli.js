@@ -23,10 +23,12 @@ function getCommandArgs (config) {
 const commands = [
     { name: 'repo', description: 'Создать новый репозиторий' },
     { name: 'api', description: 'Создать новый API' },
+    { name: 'crud', description: 'Создать новый CRUD' },
 ];
 
 yargs
     .command(...getCommandArgs(commands[0]))
     .command(...getCommandArgs(commands[1]))
+    .command(...getCommandArgs(commands[2]))
     .help()
     .argv;
