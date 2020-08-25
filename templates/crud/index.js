@@ -6,10 +6,10 @@ exports.getConfig = function getConfig (args) {
             { input: './model.ts.ejs', output: `@/src/models/${name.snakeCase}.ts` },
             { input: './model.test.ts.ejs', output: `@/src/models/${name.snakeCase}.test.ts` },
         ],
-        data (args) {
+        data () {
             return {
                 ...args,
-                tableName: args.name.snakeCase,
+                tableName: `model_${args.name.snakeCase}`,
             }
         }
     };

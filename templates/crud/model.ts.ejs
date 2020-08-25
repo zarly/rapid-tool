@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 
-export class <%= name.classCase => {
+export class <%= name.classCase %> {
     db: Pool;
 
     constructor (db: Pool) {
@@ -9,31 +9,31 @@ export class <%= name.classCase => {
 
     async init () {
         const query = `
-            CREATE SEQUENCE IF NOT EXISTS <%= tableName =>_id_seq;
-            CREATE TABLE IF NOT EXISTS <%= tableName => (
-                id int primary key DEFAULT nextval('<%= tableName =>_id_seq'), 
+            CREATE SEQUENCE IF NOT EXISTS <%= tableName %>_id_seq;
+            CREATE TABLE IF NOT EXISTS <%= tableName %> (
+                id int primary key DEFAULT nextval('<%= tableName %>_id_seq'), 
                 name text
             );
-            ALTER SEQUENCE <%= tableName =>_id_seq OWNED BY <%= tableName =>.id;
+            ALTER SEQUENCE <%= tableName %>_id_seq OWNED BY <%= tableName %>.id;
             `;
         await this.db.query(query);
     }
 
     async deInit () {
         const query = `
-            DROP TABLE IF EXISTS <%= tableName =>;
-            DROP SEQUENCE IF EXISTS <%= tableName =>_id_seq;
+            DROP TABLE IF EXISTS <%= tableName %>;
+            DROP SEQUENCE IF EXISTS <%= tableName %>_id_seq;
             `;
         await this.db.query(query);
     }
 
     async seed () {
-        const query = 'INSERT INTO <%= tableName =>(name) VALUES($1) RETURNING id';
+        const query = 'INSERT INTO <%= tableName %>(name) VALUES($1) RETURNING id';
         await this.db.query(query, ['bob']);
     }
 
     async cleanSeed () {
-        const query = 'TRUNCATE TABLE <%= tableName =>';
+        const query = 'TRUNCATE TABLE <%= tableName %>';
         await this.db.query(query);
     }
 
@@ -54,7 +54,7 @@ export class <%= name.classCase => {
     }
 
     async list (page?: number, pageSize?: number) {
-        const response = await this.db.query('SELECT * FROM <%= tableName =>');
+        const response = await this.db.query('SELECT * FROM <%= tableName %>');
         return response.rows;
     }
 
