@@ -1,0 +1,69 @@
+// Docs: https://node-postgres.com/features/connecting
+import { Pool } from 'pg';
+
+export class Model {
+    db: Pool;
+
+    constructor (db: Pool) {
+        this.db = db;
+    }
+
+    async init () {
+        const query = `
+            CREATE SEQUENCE IF NOT EXISTS users_id_seq;
+            CREATE TABLE IF NOT EXISTS users (
+                id int primary key DEFAULT nextval('users_id_seq'), 
+                name text
+            );
+            ALTER SEQUENCE users_id_seq OWNED BY users.id;
+            `;
+        await this.db.query(query);
+    }
+
+    async deInit () {
+        const query = `
+            DROP TABLE IF EXISTS users;
+            DROP SEQUENCE IF EXISTS users_id_seq;
+            `;
+        await this.db.query(query);
+    }
+
+    async seed () {
+        const query = 'INSERT INTO users(name) VALUES($1) RETURNING id';
+        await this.db.query(query, ['bob']);
+    }
+
+    async cleanSeed () {
+        const query = 'TRUNCATE TABLE users';
+        await this.db.query(query);
+    }
+
+    async add (record: any) {
+
+    }
+
+    async edit (id: number) {
+
+    }
+
+    async remove (id: number) {
+
+    }
+
+    async get (id: number) {
+
+    }
+
+    async list (page?: number, pageSize?: number) {
+        const response = await this.db.query('SELECT * FROM users');
+        return response.rows;
+    }
+
+    async search (page?: number, pageSize?: number, filter?: any, projection?: any) {
+
+    }
+
+    async bunch (commands: any[]) {
+
+    }
+}
