@@ -1,11 +1,11 @@
 
 import { expect } from 'chai';
 import { Pool } from 'pg';
-import { Model } from './postgres';
+import { <%= name.classCase => } from './<%= name.snakeCase =>';
 
 const connectionString = process.env.PG_CONNECT_STRING_TEST;
 
-describe('postgres Model', function () {
+describe('postgres <%= name.classCase =>', function () {
   let pool;
 
   this.beforeAll(async function () {
