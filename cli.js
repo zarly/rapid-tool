@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
-const path = require('path');
-const scaffold = require('easy-scaffold');
 const clc = require('cli-color');
 const yargs = require('yargs');
+const { runAction } = require('./index');
 
 function getCommandArgs (config) {
     return [config.name, config.description, function (yargs) {
         console.log(config.description);
-        scaffold(path.resolve(__dirname, 'templates', config.name), yargs.argv)
+        runAction({
+            action: config.name, 
+            params: yargs.argv,
+        })
             .then(function () {
                 console.log(clc.green.bold('Завершено успешно!'));
                 process.exit(0);

@@ -1,13 +1,7 @@
-import { Pool } from 'pg';
 
 export class <%= name.classCase %> {
-    db: Pool;
 
-    constructor (db: Pool) {
-        this.db = db;
-    }
-
-    async init () {
+    init () {
         const query = `
             CREATE SEQUENCE IF NOT EXISTS <%= tableName %>_id_seq;
             CREATE TABLE IF NOT EXISTS <%= tableName %> (
@@ -16,53 +10,50 @@ export class <%= name.classCase %> {
             );
             ALTER SEQUENCE <%= tableName %>_id_seq OWNED BY <%= tableName %>.id;
             `;
-        await this.db.query(query);
+        return query;
     }
 
-    async deInit () {
+    deInit () {
         const query = `
             DROP TABLE IF EXISTS <%= tableName %>;
             DROP SEQUENCE IF EXISTS <%= tableName %>_id_seq;
             `;
-        await this.db.query(query);
+        return query;
     }
 
-    async seed () {
+    seed () {
         const query = 'INSERT INTO <%= tableName %>(name) VALUES($1) RETURNING id';
-        await this.db.query(query, ['bob']);
+        return query;
     }
 
-    async cleanSeed () {
+    cleanSeed () {
         const query = 'TRUNCATE TABLE <%= tableName %>';
-        await this.db.query(query);
+        return query;
     }
 
-    async add (record: any) {
-
+    add (record: any) {
+        const query = 'INSERT INTO <%= tableName %>(name) VALUES($1) RETURNING id';
+        return query;
     }
 
-    async edit (id: number) {
-
+    edit (id: number, record: any) {
+        const query = 'UPDATE <%= tableName %> SET name = $2 WHERE id = $1';
+        return query;
     }
 
-    async remove (id: number) {
-
+    remove (id: number) {
+        return 'DELETE FROM <%= tableName %> WHERE id = $1';
     }
 
-    async get (id: number) {
-
+    get (id: number) {
+        return 'SELECT * FROM <%= tableName %> WHERE id = $1';
     }
 
-    async list (page?: number, pageSize?: number) {
-        const response = await this.db.query('SELECT * FROM <%= tableName %>');
-        return response.rows;
+    list (page?: number, pageSize?: number) {
+        return 'SELECT * FROM <%= tableName %> ORDER BY id';
     }
 
-    async search (page?: number, pageSize?: number, filter?: any, projection?: any) {
-
-    }
-
-    async bunch (commands: any[]) {
+    search (page?: number, pageSize?: number, filter?: any, projection?: any) {
 
     }
 }

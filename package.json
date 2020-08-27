@@ -1,8 +1,8 @@
 {
   "name": "rapid-tool",
-  "version": "0.4.7",
+  "version": "0.5.3",
   "description": "Tool for rapid development",
-  "main": "cli.js",
+  "main": "./index.js",
   "bin": {
     "rapid-tool": "./cli.js"
   },
