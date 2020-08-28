@@ -9,7 +9,7 @@ describe('core start', function () {
   let server;
 
   it('/', async function () {
-    server = start([], { silent: true });
+    server = await start({ silent: true });
 
     const response = await axios.get(HOST + '/');
     expect(response.status).equal(200);
@@ -17,7 +17,7 @@ describe('core start', function () {
   });
 
   it('/ping', async function () {
-    server = start([], { silent: true });
+    server = await start({ silent: true });
 
     const response = await axios.get(HOST + '/ping');
     expect(response.status).equal(200);
