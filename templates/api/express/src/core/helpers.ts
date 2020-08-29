@@ -4,7 +4,12 @@ export type HttpMethods = 'get' | 'post' | 'patch' | 'delete';
 
 const fileSplitter = /^([a-zA-Z]+)_([a-zA-Z-_\.]*)\.(ts|js)$/;
 
-export function buildApiPath (fullFilename: string, endpointsDir: string) {
+type ErrorType = Error | string;
+type ErrorResult = [ErrorType, null, null];
+type SuccessResult = [null, HttpMethods, string];
+type Result = ErrorResult | SuccessResult;
+
+export function buildApiPath (fullFilename: string, endpointsDir: string): Result {
     const filename = path.basename(fullFilename);
     const match = filename.match(fileSplitter);
     if (!match) {
