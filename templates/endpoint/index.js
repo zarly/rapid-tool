@@ -10,6 +10,7 @@ exports.getConfig = function getConfig (args) {
         entities: [
             { input: './endpoint.ts.ejs', output: `@/src/endpoints/${filePath}.ts` },
             { input: './endpoint.test.ts.ejs', output: `@/src/endpoints/${filePath}.test.ts` },
+            { cmd: `git add . && git commit -m "add new endpoint"` },
         ],
         data () {
             return {

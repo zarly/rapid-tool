@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { <%= name.camelCase %> } from 'src/models/<%= name.snakeCase %>';
+import { <%= name.camelCase %> } from '<%= srcRoot %>/models/<%= name.snakeCase %>';
 
 export async function handler (req: Request, res: Response) {
     const data = await <%= name.camelCase %>.list();
