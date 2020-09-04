@@ -2,6 +2,6 @@ import { Request, Response } from 'express';
 import { <%= name.camelCase %> } from '<%= srcRoot %>/models/<%= name.snakeCase %>';
 
 export async function handler (req: Request, res: Response) {
-    const result = await <%= name.camelCase %>.list();
-    res.json(result.rows);
+    const rows = await <%= name.camelCase %>.list();
+    res.json(rows);
 }
