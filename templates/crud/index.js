@@ -1,6 +1,7 @@
 
 exports.getConfig = function getConfig (args) {
-    const { name, datasource = 'default' } = args;
+    args.datasource = args.datasource || 'default';
+    const { name } = args;
     return {
         entities: [
             { input: './api/get_.ts.ejs', output: `@/src/endpoints/${name.snakeCase}/get_.ts` },

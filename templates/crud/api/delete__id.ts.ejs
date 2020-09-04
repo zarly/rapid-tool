@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
+import { <%= name.camelCase %> } from 'src/models/<%= name.snakeCase %>';
 
-export function handler (req: Request, res: Response) {
-    res.json({});
+export async function handler (req: Request, res: Response) {
+    const id = parseInt(req.params.id, 10);
+    const result = await <%= name.camelCase %>.remove(id);
+    res.json(result);
 }

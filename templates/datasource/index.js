@@ -1,6 +1,9 @@
 
 exports.getConfig = function getConfig (args) {
-    const { name = 'default', type = 'postgres' } = args;
+    args.datasource = args.datasource || 'default';
+    args.type = args.type || 'postgres';
+    const { name, type } = args;
+    
     if (type === 'postgres') {
         return {
             entities: [

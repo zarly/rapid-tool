@@ -1,9 +1,9 @@
-import { db } from '../datasources/<%= datasource %>'
+import { db, DbType } from '../datasources/<%= datasource %>'
 
 export class <%= name.classCase %> {
-    db: typeof db;
+    db: DbType;
 
-    constructor (db) {
+    constructor (db: DbType) {
         this.db = db;
     }
 
