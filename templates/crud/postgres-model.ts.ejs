@@ -1,0 +1,71 @@
+import { db } from '../datasources/<%= datasource %>'
+
+export class <%= name.classCase %> {
+    db: typeof db;
+
+    constructor (db) {
+        this.db = db;
+    }
+
+    async init () {
+        const query = `
+            CREATE SEQUENCE IF NOT EXISTS <%= tableName %>_id_seq;
+            CREATE TABLE IF NOT EXISTS <%= tableName %> (
+                id int primary key DEFAULT nextval('<%= tableName %>_id_seq'), 
+                name text
+            );
+            ALTER SEQUENCE <%= tableName %>_id_seq OWNED BY <%= tableName %>.id;
+            `;
+        return await this.db.query(query);
+    }
+
+    async deInit () {
+        const query = `
+            DROP TABLE IF EXISTS <%= tableName %>;
+            DROP SEQUENCE IF EXISTS <%= tableName %>_id_seq;
+            `;
+        return await this.db.query(query);
+    }
+
+    async seed () {
+        const query = 'INSERT INTO <%= tableName %>(name) VALUES($1) RETURNING id';
+        return await this.db.query(query, ['bob']);
+    }
+
+    async cleanSeed () {
+        const query = 'TRUNCATE TABLE <%= tableName %>';
+        return await this.db.query(query);
+    }
+
+    async add (record: any) {
+        const query = 'INSERT INTO <%= tableName %>(name) VALUES($1) RETURNING id';
+        return await this.db.query(query, ['bob']);
+    }
+
+    async edit (id: number, record: any) {
+        const query = 'UPDATE <%= tableName %> SET name = $2 WHERE id = $1';
+        return await this.db.query(query, [id, 'bill']);
+    }
+
+    async remove (id: number) {
+        const query = 'DELETE FROM <%= tableName %> WHERE id = $1';
+        return await this.db.query(query, [id]);
+    }
+
+    async get (id: number) {
+        const query = 'SELECT * FROM <%= tableName %> WHERE id = $1';
+        return await this.db.query(query, [id]);
+    }
+
+    async list (page?: number, pageSize?: number) {
+        const query = 'SELECT * FROM <%= tableName %> ORDER BY id';
+        return await this.db.query(query);
+    }
+
+    async search (page?: number, pageSize?: number, filter?: any, projection?: any) {
+        const query = 'SELECT * FROM <%= tableName %> ORDER BY id';
+        return await this.db.query(query);
+    }
+}
+
+export const <%= name.camelCase %> = new <%= name.classCase %>(db);

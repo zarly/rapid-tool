@@ -1,6 +1,6 @@
 
 exports.getConfig = function getConfig (args) {
-    const { name } = args;
+    const { name, datasource = 'default' } = args;
     return {
         entities: [
             { input: './api/get_.ts.ejs', output: `@/src/endpoints/${name.snakeCase}/get_.ts` },
@@ -9,9 +9,8 @@ exports.getConfig = function getConfig (args) {
             { input: './api/patch__id.ts.ejs', output: `@/src/endpoints/${name.snakeCase}/patch__id.ts` },
             { input: './api/delete__id.ts.ejs', output: `@/src/endpoints/${name.snakeCase}/delete__id.ts` },
             
-            { cmd: 'npm i --save pg@8.3.3 && npm i -D @types/pg@7.14.4' },
-            { input: './model.ts.ejs', output: `@/src/models/${name.snakeCase}.ts` },
-            { input: './model.test.ts.ejs', output: `@/src/models/${name.snakeCase}.test.ts` },
+            { input: './postgres-model.ts.ejs', output: `@/src/models/${name.snakeCase}.ts` },
+            { input: './postgres-model.test.ts.ejs', output: `@/src/models/${name.snakeCase}.test.ts` },
         ],
         data () {
             return {

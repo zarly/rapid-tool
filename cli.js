@@ -26,13 +26,12 @@ const commands = [
     { name: 'repo', description: 'Создать новый репозиторий' },
     { name: 'api', description: 'Создать новый API' },
     { name: 'endpoint', description: 'Создать новый метод API' },
+    { name: 'datasource', description: 'Добавить новый источник данных' },
     { name: 'crud', description: 'Создать новый CRUD' },
 ];
 
-yargs
-    .command(...getCommandArgs(commands[0]))
-    .command(...getCommandArgs(commands[1]))
-    .command(...getCommandArgs(commands[2]))
-    .command(...getCommandArgs(commands[3]))
-    .help()
-    .argv;
+let arg = yargs
+for (let i = 0; i < commands.length; i++) {
+    arg = arg.command(...getCommandArgs(commands[i]));
+}
+arg.help().argv;
