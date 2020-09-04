@@ -3,6 +3,6 @@ import { <%= name.camelCase %> } from '<%= srcRoot %>/models/<%= name.snakeCase 
 
 export async function handler (req: Request, res: Response) {
     const id = parseInt(req.params.id, 10);
-    const data = await <%= name.camelCase %>.get(id);
-    res.json(data);
+    const result = await <%= name.camelCase %>.get(id);
+    res.json(result.rows[0]);
 }

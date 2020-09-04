@@ -66,6 +66,11 @@ export class <%= name.classCase %> {
         const query = 'SELECT * FROM <%= tableName %> ORDER BY id LIMIT 5';
         return await this.db.query(query);
     }
+
+    async count (filter?: any, projection?: any) {
+        const query = 'SELECT COUNT(*) FROM <%= tableName %>';
+        return await this.db.query(query);
+    }
 }
 
 export const <%= name.camelCase %> = new <%= name.classCase %>(db);
