@@ -1,6 +1,7 @@
 import path from 'path';
 import clc from 'cli-color';
 import express, { Express } from 'express';
+import bodyParser from 'body-parser';
 import { dispatcher } from './dispatcher';
 import { buildApiPath } from './helpers';
 
@@ -10,6 +11,7 @@ export interface StartOptions {
 
 export const PORT = process.env.PORT || 8080;
 const endpointsDir = path.resolve(__dirname, '..', 'endpoints');
+const jsonBodyParser = bodyParser.json();
 
 async function hanldeAllFilesInEndpointsDir (app: Express, options: StartOptions) {
   const files = await dispatcher(endpointsDir);
@@ -21,7 +23,11 @@ async function hanldeAllFilesInEndpointsDir (app: Express, options: StartOptions
     } else if ('string' === typeof method && 'string' === typeof apiPath) {
       const { handler } = require(path.resolve(endpointsDir, fullFilename));
       if (!options.silent) console.log(clc.blackBright(`Найден эндпоинт ${method.toUpperCase()} ${apiPath}`));
-      app[method](apiPath, handler);
+      if (method === 'get' || method === 'delete') {
+        app[method](apiPath, handler);
+      } else {
+        app[method](apiPath, jsonBodyParser, handler);
+      }
     } else {
       throw new Error('Unexpected api path result');
     }

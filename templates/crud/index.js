@@ -1,7 +1,15 @@
 
 exports.getConfig = function getConfig (args) {
     args.datasource = args.datasource || 'default';
+    args.fields = args.fields || [];
     const { name } = args;
+
+    const fieldsCreateList = args.fields.map(it => `${it.name} ${it.type}`).join(',\n\t\t\t\t');
+    const fieldsNameList = args.fields.map(it => it.name).join();
+    const fieldsArgsList = args.fields.map((it, n) => `$${n + 1}`).join();
+    const fieldsUpdateList = args.fields.map((it, n) => `${it.name} = $${n + 2}`).join(', ');
+    const fieldsRecordArr = args.fields.map(it => `record['${it.name}']`).join(', ');
+
     return {
         entities: [
             { input: './api/get_.ts.ejs', output: `@/src/endpoints/${name.snakeCase}/get_.ts` },
@@ -18,8 +26,13 @@ exports.getConfig = function getConfig (args) {
         data () {
             return {
                 ...args,
-                tableName: `model_${args.name.snakeCase}`,
                 srcRoot: `../..`,
+                tableName: `model_${args.name.snakeCase}`,
+                fieldsCreateList,
+                fieldsNameList,
+                fieldsArgsList,
+                fieldsUpdateList,
+                fieldsRecordArr,
             }
         }
     };
