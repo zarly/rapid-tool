@@ -28,6 +28,7 @@ const commands = [
     { name: 'endpoint', description: 'Создать новый метод API' },
     { name: 'datasource', description: 'Добавить новый источник данных' },
     { name: 'crud', description: 'Создать новый CRUD' },
+    { name: 'telegram_bot', description: 'Скрипты для бота Телеграм' },
 ];
 
 let arg = yargs
