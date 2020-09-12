@@ -24,6 +24,7 @@ function getCommandArgs (config) {
 
 const commands = [
     { name: 'repo', description: 'Создать новый репозиторий' },
+    { name: 'web', description: 'Создать новый Web Client' },
     { name: 'api', description: 'Создать новый API' },
     { name: 'endpoint', description: 'Создать новый метод API' },
     { name: 'datasource', description: 'Добавить новый источник данных' },
