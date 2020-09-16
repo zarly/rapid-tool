@@ -7,7 +7,7 @@ exports.getConfig = function getConfig (args) {
         entities: [
             { cmd: `pwd` },
             { cmd: `mkdir -p ${name}` },
-            { cmd: `cp -R ${path.resolve(__dirname, 'vue')}/. ./${name}` },
+            { cmd: `cp -R ${path.resolve(__dirname, 'svelte')}/. ./${name}` },
             { cmd: `tar -xvf ${path.resolve(__dirname, 'deps.tar.gz')} -C ./${name}` },
             { cmd: `cd ${name} && git init && git add . && git commit -m init && cd -` },
             { cmd: `cd ${name} && npm install` },
