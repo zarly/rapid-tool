@@ -1,6 +1,6 @@
 {
   "name": "rapid-tool",
-  "version": "11.0.0",
+  "version": "11.1.0",
   "description": "Tool for rapid development",
   "main": "./index.js",
   "bin": {
