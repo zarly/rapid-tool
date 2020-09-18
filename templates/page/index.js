@@ -4,7 +4,7 @@ exports.getConfig = function getConfig (args) {
     const filePath = ('@/src/pages/' + name.snakeCase).replace(/[\/]+/, '/');
     return {
         entities: [
-            { input: './page.ts.ejs', output: `${filePath}.ts` },
+            { input: './page.vue.ejs', output: `${filePath}.vue` },
             { input: './page.test.ts.ejs', output: `${filePath}.test.ts` },
             { cmd: `git add . && git commit -m "add new page"` },
         ],
