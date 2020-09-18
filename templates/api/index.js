@@ -13,7 +13,6 @@ exports.getConfig = function getConfig (args) {
             { input: './package.json.ejs', output: `@/${dir}/package.json` },
             { input: './package-lock.json.ejs', output: `@/${dir}/package-lock.json` },
             { cmd: `cd ${dir} && git init && git add . && git commit -m init && cd -` },
-            { cmd: `cd ${dir} && npm install` },
         ],
     };
 };
