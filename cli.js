@@ -36,6 +36,8 @@ const commands = [
     { name: 'crud', description: 'Создать новый CRUD' },
     { name: 'telegram_bot', description: 'Скрипты для бота Телеграм' },
     { name: 'project', description: 'Создать новый проект' },
+    { name: 'page', description: 'Создать новую страницу' },
+    { name: 'component', description: 'Создать новый компонент' },
 ];
 
 let arg = yargs
