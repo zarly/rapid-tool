@@ -9,7 +9,7 @@ export interface StartOptions {
   silent?: boolean;
 }
 
-export const PORT = process.env.PORT || 8080;
+export const PORT = process.env.PORT || 8000;
 const endpointsDir = path.resolve(__dirname, '..', 'endpoints');
 const jsonBodyParser = bodyParser.json();
 
