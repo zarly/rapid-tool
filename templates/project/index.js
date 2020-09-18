@@ -2,7 +2,8 @@
 const path = require('path');
 
 exports.getConfig = function getConfig (args) {
-    const dir = args.dir || args.dir;
+    const name = args.name;
+    const dir = args.dir || args.name;
     return {
         entities: [
             { cmd: `pwd` },
