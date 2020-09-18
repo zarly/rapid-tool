@@ -4,6 +4,10 @@ const clc = require('cli-color');
 const yargs = require('yargs');
 const { runAction } = require('./index');
 
+function saveTemplate (yargs) {
+    console.log('yargs =', yargs);
+}
+
 function getCommandArgs (config) {
     return [config.name, config.description, function (yargs) {
         console.log(config.description);
@@ -24,15 +28,18 @@ function getCommandArgs (config) {
 
 const commands = [
     { name: 'repo', description: 'Создать новый репозиторий' },
-    { name: 'web', description: 'Создать новый Web Client' },
+    { name: 'web-vue', description: 'Создать новый web-client на Vue' },
+    { name: 'web-svelte', description: 'Создать новый web-client на Svelte' },
     { name: 'api', description: 'Создать новый API' },
     { name: 'endpoint', description: 'Создать новый метод API' },
     { name: 'datasource', description: 'Добавить новый источник данных' },
     { name: 'crud', description: 'Создать новый CRUD' },
     { name: 'telegram_bot', description: 'Скрипты для бота Телеграм' },
+    { name: 'project', description: 'Создать новый проект' },
 ];
 
 let arg = yargs
+arg = arg.command('save', 'Сохранить шаблон', saveTemplate);
 for (let i = 0; i < commands.length; i++) {
     arg = arg.command(...getCommandArgs(commands[i]));
 }

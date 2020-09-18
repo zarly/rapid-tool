@@ -2,18 +2,18 @@
 const path = require('path');
 
 exports.getConfig = function getConfig (args) {
-    const { name } = args;
+    const dir = args.dir || args.dir;
     return {
         entities: [
             { cmd: `pwd` },
-            { cmd: `mkdir -p ${name}` },
-            { cmd: `cp -R ${path.resolve(__dirname, 'express')}/. ./${name}` },
-            { cmd: `tar -xvf ${path.resolve(__dirname, 'deps.tar.gz')} -C ./${name}` },
-            { input: './.gitignore.ejs', output: `@/${name}/.gitignore` },
-            { input: './package.json.ejs', output: `@/${name}/package.json` },
-            { input: './package-lock.json.ejs', output: `@/${name}/package-lock.json` },
-            { cmd: `cd ${name} && git init && git add . && git commit -m init && cd -` },
-            { cmd: `cd ${name} && npm install` },
+            { cmd: `mkdir -p ${dir}` },
+            { cmd: `cp -R ${path.resolve(__dirname, 'express')}/. ./${dir}` },
+            { cmd: `tar -xvf ${path.resolve(__dirname, 'deps.tar.gz')} -C ./${dir}` },
+            { input: './.gitignore.ejs', output: `@/${dir}/.gitignore` },
+            { input: './package.json.ejs', output: `@/${dir}/package.json` },
+            { input: './package-lock.json.ejs', output: `@/${dir}/package-lock.json` },
+            { cmd: `cd ${dir} && git init && git add . && git commit -m init && cd -` },
+            { cmd: `cd ${dir} && npm install` },
         ],
     };
 };
