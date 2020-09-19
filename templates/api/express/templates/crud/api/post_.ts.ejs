@@ -1,0 +1,10 @@
+import { Request, Response } from 'express';
+import { <%- name.camelCase %> } from '<%- srcRoot %>/models/<%- name.snakeCase %>';
+
+export async function handler (req: Request, res: Response) {
+    const result = await <%- name.camelCase %>.add(req.body);
+    res.json({
+        success: true,
+        id: result.rows[0] && result.rows[0].id,
+    });
+}

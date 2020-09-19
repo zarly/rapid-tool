@@ -1,0 +1,27 @@
+
+import { expect } from 'chai';
+import { Pool } from 'pg';
+import { <%- name.classCase %> } from './<%- name.snakeCase %>';
+
+const connectionString = process.env.PG_CONNECT_STRING_TEST;
+
+describe('postgres <%- name.classCase %>', function () {
+  let pool;
+
+  this.beforeAll(async function () {
+    pool = new Pool({ connectionString });
+  });
+
+  this.afterAll(async function () {
+    await pool.end();
+  });
+
+  it('base init scenario', async function () {
+    const model = new <%- name.classCase %>(pool);
+    await model.deInit();
+    await model.init();
+    const rows = await model.list();
+    expect(rows.length).equal(0);
+  });
+
+});
