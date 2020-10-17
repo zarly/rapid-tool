@@ -1,12 +1,12 @@
 <template>
-    <div class="<%- name.kebabCase %>-page">
+    <div class="<%- name.classCase %>Page">
       <%- name %> page
     </div>
   </template>
   
   <script>
   export default {
-    name: '<%- name.upperCase %>Page',
+    name: '<%- name.classCase %>Page',
     data () {
       return {};
     },
@@ -14,7 +14,7 @@
   </script>
   
   <style lang="less" scoped>
-  .<%- name.kebabCase %>-page {
+  .<%- name.classCase %>Page {
   }
   </style>
   

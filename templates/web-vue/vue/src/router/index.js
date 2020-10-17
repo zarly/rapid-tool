@@ -5,17 +5,17 @@ import About from '@/pages/about/about_page';
 
 Vue.use(Router);
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Home',
-      component: Home,
-    },
-    {
-      path: '/about',
-      name: 'About',
-      component: About,
-    },
-  ],
-});
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home,
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About,
+  },
+];
+
+export default new Router({ routes });
