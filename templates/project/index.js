@@ -8,6 +8,16 @@ exports.getConfig = async function getConfig (args, cwd) {
     return {
         entities: [
             { cmd: `mkdir -p ${dir}` },
+            { input: './files', output: `@/${dir}` },
+            { 
+                json: `@/${dir}/.scaffold/recipe.json`, 
+                modify (json) {
+                    json.init = {
+                        command: 'project',
+                        args: args,
+                    };
+                } 
+            },
             { 
                 scaffold: path.resolve(__dirname, '..', 'api'),
                 cwd: path.resolve(path.join(cwd, dir)),

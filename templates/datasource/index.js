@@ -7,8 +7,17 @@ exports.getConfig = function getConfig (args) {
     if (type === 'postgres') {
         return {
             entities: [
-                { cmd: 'npm i --save pg@8.3.3 && npm i -D @types/pg@7.14.4' },
+                // { cmd: 'npm i --save pg@8.3.3 && npm i -D @types/pg@7.14.4' },
                 { input: './postgres.ts.ejs', output: `@/src/datasources/${name.snakeCase}.ts` },
+                { 
+                    json: `@/.scaffold/recipe.json`, 
+                    modify (json) {
+                        json.updates.push({
+                            command: 'datasource',
+                            args: args,
+                        });
+                    } 
+                },
                 { cmd: `git add . && git commit -m "add new datasource"` },
             ],
         };
@@ -16,6 +25,15 @@ exports.getConfig = function getConfig (args) {
         return {
             entities: [
                 { input: './memory.ts.ejs', output: `@/src/datasources/${name.snakeCase}.ts` },
+                { 
+                    json: `@/.scaffold/recipe.json`, 
+                    modify (json) {
+                        json.updates.push({
+                            command: 'datasource',
+                            args: args,
+                        });
+                    } 
+                },
                 { cmd: `git add . && git commit -m "add new datasource"` },
             ],
         };

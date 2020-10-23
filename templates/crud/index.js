@@ -14,16 +14,31 @@ exports.getConfig = function getConfig (args) {
 
     const endpointDir = `@/src/endpoints/${prefix}/${name.snakeCase}`.replace(/[\/]+/, '/');
     const modelPath = `@/src/models/${name.snakeCase}`;
+    const endpointSrcRoot = endpointDir
+        .replace('@/src/', '')
+        .split('/')
+        .filter(it => it)
+        .map(() => '..')
+        .join('/');
     return {
         entities: [
             { input: './api/', output: endpointDir },
             { input: './postgres-model/', output: modelPath },
+            { 
+                json: `@/.scaffold/recipe.json`, 
+                modify (json) {
+                    json.updates.push({
+                        command: 'crud',
+                        args: args,
+                    });
+                } 
+            },
             { cmd: `git add . && git commit -m "add new crud"` },
         ],
         data () {
             return {
                 ...args,
-                srcRoot: `../..`,
+                srcRoot: endpointSrcRoot,
                 tableName: `model_${args.name.snakeCase}`,
                 fieldsCreateList,
                 fieldsNameReadList,

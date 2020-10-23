@@ -6,7 +6,16 @@ exports.getConfig = function getConfig (args) {
     return {
         entities: [
             { cmd: `mkdir -p ${dir}` },
-            { input: './express', output: `@/${dir}` },
+            { input: './files', output: `@/${dir}` },
+            { 
+                json: `@/${dir}/.scaffold/recipe.json`, 
+                modify (json) {
+                    json.init = {
+                        command: 'api',
+                        args: args,
+                    };
+                } 
+            },
             { cmd: `tar -xvf ${path.resolve(__dirname, 'deps.tar.gz')} -C ./${dir}` },
             { cmd: `cd ${dir} && git init && git add . && git commit -m init && cd -` },
         ],

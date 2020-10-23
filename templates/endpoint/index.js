@@ -15,6 +15,15 @@ exports.getConfig = function getConfig (args) {
         entities: [
             { input: './endpoint.ts.ejs', output: `${filePath}.ts` },
             { input: './endpoint.test.ts.ejs', output: `${filePath}.test.ts` },
+            { 
+                json: `@/.scaffold/recipe.json`, 
+                modify (json) {
+                    json.updates.push({
+                        command: 'endpoint',
+                        args: args,
+                    });
+                } 
+            },
             { cmd: `git add . && git commit -m "add new endpoint"` },
         ],
         data () {
