@@ -17,8 +17,8 @@ exports.getConfig = function getConfig (args) {
         entities: [
             { input: './pages', output: '@/src/pages/auth' },
             { file: '@/src/router/index.js', modify: addAuthRoute },
-            { 
-                json: `@/.scaffold/recipe.json`, 
+            {
+                json: `@/.scaffold/recipe.json`,
                 modify (json) {
                     json.updates.push({
                         command: 'auth-ui',

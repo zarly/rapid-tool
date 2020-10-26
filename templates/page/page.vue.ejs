@@ -1,20 +1,17 @@
 <template>
-    <div class="<%- name.classCase %>Page">
-      <%- name %> page
-    </div>
-  </template>
-  
-  <script>
+  <div class="<%- name.classCase %>Page">
+    <%- name %> page
+  </div>
+</template>
+
+<script>
   export default {
     name: '<%- name.classCase %>Page',
     data () {
       return {};
     },
   }
-  </script>
-  
-  <style lang="less" scoped>
-  .<%- name.classCase %>Page {
-  }
-  </style>
+</script>
+
+<style lang="less" scoped src="<%- name.snakeCase %>" />
   

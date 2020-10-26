@@ -1,0 +1,19 @@
+
+.fields-list {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    width: 400px;
+
+    & > * {
+        display: flex;
+        justify-content: space-between;
+
+        &:not(:first-child) {
+            margin-top: var(--item-space, 5px);
+        }
+    }
+}

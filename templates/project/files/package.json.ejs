@@ -2,6 +2,20 @@
   "name": "<%- name.kebabCase %>",
   "version": "0.1.0",
   "description": "Project package",
-  "scripts": {},
-  "license": "MIT"
+  "scripts": {
+    "start": "run-p start:api start:web start:admin start:lib",
+    "build": "run-p build:api build:web build:admin build:lib",
+    "start:api": "cd api && npm start",
+    "start:web": "cd web && npm start",
+    "start:admin": "cd admin && PORT=8070 npm start",
+    "start:lib": "cd lib && npm run dev",
+    "build:api": "cd api && npm run build",
+    "build:web": "cd web && npm run build",
+    "build:admin": "cd admin && npm run build",
+    "build:lib": "cd lib && npm run build"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "npm-run-all": "4.1.5"
+  }
 }

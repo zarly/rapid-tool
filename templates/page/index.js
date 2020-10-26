@@ -6,6 +6,7 @@ exports.getConfig = function getConfig (args) {
     return {
         entities: [
             { input: './page.vue.ejs', output: `${filePath}/${name.snakeCase}.vue` },
+            { input: './page.less.ejs', output: `${filePath}/${name.snakeCase}.less` },
             { input: './page.spec.js.ejs', output: `${filePath}/${name.snakeCase}.spec.js` },
             { 
                 json: `@/.scaffold/recipe.json`, 

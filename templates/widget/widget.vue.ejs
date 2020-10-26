@@ -1,12 +1,12 @@
 <template>
-  <div class="<%- name.upperCase %>Component">
-    <%- name.upperCase %> Component
+  <div class="<%- name.classCase %>Widget">
+    <%- name %> widget
   </div>
 </template>
-
+  
 <script>
   export default {
-    name: '<%- name.upperCase %>Component',
+    name: '<%- name.classCase %>Widget',
     data () {
       return {};
     },
@@ -14,3 +14,4 @@
 </script>
 
 <style lang="less" scoped src="<%- name.snakeCase %>" />
+  

@@ -59,31 +59,5 @@
   }
   </script>
   
-  <style lang="less" scoped>
-  .SignupPage {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-    .fields-list {
-      border: 1px solid #aaa;
-      border-radius: 4px;
-      padding: 10px 15px;
-      display: flex;
-      flex-direction: column;
-      justify-content: stretch;
-      width: 400px;
-
-      & > * {
-        display: flex;
-        justify-content: space-between;
-      
-        &:not(:first-child) {
-          margin-top: 5px;
-        }
-      }
-    }
-  }
-  </style>
+<style lang="less" scoped src="./signup.less" />
   

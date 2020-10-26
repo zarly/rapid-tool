@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import { expect } from 'chai';
-import Page from './<%- name.snakeCase %>';
+import Component from './<%- name.snakeCase %>';
 
-describe('<%- name.classCase %>Page', function () {
+describe('<%- name.classCase %>', function () {
   it('should renders without errors', () => {
-    const Constructor = Vue.extend(Page);
+    const Constructor = Vue.extend(Component);
     const vm = new Constructor().$mount();
   });
 });
