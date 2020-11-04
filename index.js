@@ -8,20 +8,19 @@ const MODES = {
     REVERT: 3,
 };
 
+const templatePaths = [__dirname];
+
 async function runScaffold ({ action, params, cwd }) {
-    const configFilePath = await scaffold.resolveConfigFile(action, cwd) || path.resolve(__dirname, 'templates', action);
-    return await scaffold(configFilePath, params, { cwd, utils });
+    return await scaffold(action, params, { cwd, utils, templatePaths });
 }
 
 async function runRevert ({ action, params, cwd }) {
-    const configFilePath = await scaffold.resolveConfigFile(action, cwd) || path.resolve(__dirname, 'templates', action);
-    return await scaffold.revert(configFilePath, params, { cwd, utils });
+    return await scaffold.revert(action, params, { cwd, utils, templatePaths });
 }
 
 async function runUpdate ({ action, params, cwd }) {
-    const configFilePath = await scaffold.resolveConfigFile(action, cwd) || path.resolve(__dirname, 'templates', action);
-    await scaffold.revert(configFilePath, params, { cwd, utils });
-    return await scaffold(configFilePath, params, { cwd, utils });
+    await scaffold.revert(action, params, { cwd, utils, templatePaths });
+    return await scaffold(action, params, { cwd, utils, templatePaths });
 }
 
 async function runAction ({ mode = MODES.NORMAL, ...params }) {

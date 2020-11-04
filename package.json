@@ -1,10 +1,13 @@
 {
   "name": "rapid-tool",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "description": "Tool for rapid development",
   "main": "./index.js",
   "bin": {
     "rapid-tool": "./cli.js"
+  },
+  "engines": {
+    "node": ">=12"
   },
   "repository": {
     "type": "git",
@@ -13,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "cli-color": "2.0.0",
-    "easy-scaffold": "2.8.1",
+    "easy-scaffold": "3.0.0",
     "yargs": "15.3.1"
   }
 }
