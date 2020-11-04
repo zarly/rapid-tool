@@ -1,6 +1,7 @@
+import fs from 'fs';
 import glob from 'glob';
 
-export function dispatcher (directory: string): Promise<string[]> {
+export function deepDispatcher (directory: string): Promise<string[]> {
     return new Promise(function (resolve, reject) {
         glob('./**/*.@(ts|js)', { 
             cwd: directory,
@@ -12,4 +13,8 @@ export function dispatcher (directory: string): Promise<string[]> {
             else resolve(files);
         });
     });
+}
+
+export function flatDispatcher (directory: string): Promise<string[]> {
+    return fs.promises.readdir(directory);
 }

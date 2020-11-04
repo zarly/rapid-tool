@@ -12,11 +12,17 @@ function addAuthRoute (code) {
     return code;
 }
 
+function deleteAuthRoute (code) {
+    code = code.replace(`import Auth from '@/pages/auth';\n`, '');
+    code = code.replace(`  Auth('/auth'),\n`, '');
+    return code;
+}
+
 exports.getConfig = function getConfig (args) {
     return {
         entities: [
             { input: './pages', output: '@/src/pages/auth' },
-            { file: '@/src/router/index.js', modify: addAuthRoute },
+            { file: '@/src/router/index.js', modify: addAuthRoute, revert: deleteAuthRoute },
             {
                 json: `@/.scaffold/recipe.json`,
                 modify (json) {
@@ -24,9 +30,19 @@ exports.getConfig = function getConfig (args) {
                         command: 'auth-ui',
                         args: args,
                     });
-                } 
+                },
+                revert (json) {
+                    json.updates.push({
+                        command: 'auth-ui',
+                        args: args,
+                        revert: true,
+                    });
+                },
             },
-            { cmd: `git add . && git commit -m "add new page"` },
+            {
+                cmd: `git add . && git commit -m "add auth ui" || echo "git error"`,
+                revert: `git add . && git commit -m "revert add auth ui" || echo "git error"`,
+            },
         ],
     };
 };

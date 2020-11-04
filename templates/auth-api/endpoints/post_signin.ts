@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { logout } from '../../core/auth';
+import { login } from '../../midlewares/auth';
 
 export function handler (req: Request, res: Response) {
     res.send({succes: true});
 }
 
-export const middlewares = [...logout()];
+export const middlewares = [...login()];

@@ -24,7 +24,7 @@ exports.getConfig = function getConfig (args) {
         entities: [
             { input: './api/', output: endpointDir },
             { input: './postgres-model/', output: modelPath },
-            { 
+            args.inherited ? null : { 
                 json: `@/.scaffold/recipe.json`, 
                 modify (json) {
                     json.updates.push({
@@ -33,7 +33,7 @@ exports.getConfig = function getConfig (args) {
                     });
                 } 
             },
-            { cmd: `git add . && git commit -m "add new crud"` },
+            args.inherited ? null : { cmd: `git add . && git commit -m "add new crud"` },
         ],
         data () {
             return {

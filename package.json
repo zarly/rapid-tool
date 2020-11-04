@@ -1,6 +1,6 @@
 {
   "name": "rapid-tool",
-  "version": "12.6.1",
+  "version": "13.0.0",
   "description": "Tool for rapid development",
   "main": "./index.js",
   "bin": {
@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "cli-color": "2.0.0",
-    "easy-scaffold": "2.6.1",
+    "easy-scaffold": "2.8.1",
     "yargs": "15.3.1"
   }
 }

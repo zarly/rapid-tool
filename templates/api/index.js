@@ -1,7 +1,7 @@
 
 const path = require('path');
 
-exports.getConfig = function getConfig (args) {
+exports.getConfig = function getConfig (args, cwd, utils) {
     const dir = args.dir || args.name;
     return {
         entities: [
@@ -16,7 +16,7 @@ exports.getConfig = function getConfig (args) {
                     };
                 } 
             },
-            { cmd: `tar -xvf ${path.resolve(__dirname, 'deps.tar.gz')} -C ./${dir}` },
+            args.skipDeps ? null : { cmd: `tar -xvf ${path.resolve(__dirname, 'deps.tar.gz')} -C ./${dir}` },
             // { cmd: `cd ${dir} && git init && git add . && git commit -m init && cd -` },
         ],
     };

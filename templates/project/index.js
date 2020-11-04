@@ -55,7 +55,7 @@ exports.getConfig = async function getConfig (args, cwd) {
                     description: 'Web Lib package',
                 },
             },
-            { cmd: `tar -xvf ${path.resolve(__dirname, 'deps.tar.gz')} -C ./${dir}` },
+            args.skipDeps ? null : { cmd: `tar -xvf ${path.resolve(__dirname, 'deps.tar.gz')} -C ./${dir}` },
             { cmd: `cd ${dir} && git init && git add . && git commit -m init && cd -` },
         ],
         data: {

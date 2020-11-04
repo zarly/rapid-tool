@@ -5,6 +5,7 @@
   "scripts": {
     "start": "run-p start:api start:web start:admin start:lib",
     "build": "run-p build:api build:web build:admin build:lib",
+    "test": "run-s test:api test:web test:admin test:lib",
     "start:api": "cd api && npm start",
     "start:web": "cd web && npm start",
     "start:admin": "cd admin && PORT=8070 npm start",
@@ -12,7 +13,11 @@
     "build:api": "cd api && npm run build",
     "build:web": "cd web && npm run build",
     "build:admin": "cd admin && npm run build",
-    "build:lib": "cd lib && npm run build"
+    "build:lib": "cd lib && npm run build",
+    "test:api": "cd api && npm test",
+    "test:web": "cd web && npm test",
+    "test:admin": "cd admin && npm test",
+    "test:lib": "cd lib && npm test"
   },
   "license": "MIT",
   "devDependencies": {
