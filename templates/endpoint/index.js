@@ -1,5 +1,5 @@
 
-exports.getConfig = function getConfig (args) {
+exports.getConfig = function getConfig (args, cwd, utils) {
     const method = (args.method || (args._ && args._[1]) || '').toLowerCase();
     if (!method) throw new Error('Parameter "method" is not defined');
 
@@ -15,25 +15,15 @@ exports.getConfig = function getConfig (args) {
         entities: [
             { input: './endpoint.ts.ejs', output: `${filePath}.ts` },
             { input: './endpoint.test.ts.ejs', output: `${filePath}.test.ts` },
-            { 
-                json: `@/.scaffold/recipe.json`, 
-                modify (json) {
-                    json.updates.push({
-                        command: 'endpoint',
-                        args: args,
-                    });
-                } 
-            },
-            { cmd: `git add . && git commit -m "add new endpoint"` },
+            utils.addScaffoldRecipieStep(args, 'endpoint'),
+            utils.gitCommitCmd(args, 'add new endpoint'),
         ],
-        data () {
-            return {
-                ...args,
-                method,
-                apiPath,
-                fileName,
-                filePath,
-            }
-        }
+        data: {
+            ...args,
+            method,
+            apiPath,
+            fileName,
+            filePath,
+        },
     };
 };

@@ -1,5 +1,5 @@
 
-exports.getConfig = function getConfig (args) {
+exports.getConfig = function getConfig (args, cwd, utils) {
     args.datasource = args.datasource || 'default';
     args.fields = args.fields || [];
     args.prefix = args.prefix || '';
@@ -24,29 +24,19 @@ exports.getConfig = function getConfig (args) {
         entities: [
             { input: './api/', output: endpointDir },
             { input: './postgres-model/', output: modelPath },
-            args.inherited ? null : { 
-                json: `@/.scaffold/recipe.json`, 
-                modify (json) {
-                    json.updates.push({
-                        command: 'crud',
-                        args: args,
-                    });
-                } 
-            },
-            args.inherited ? null : { cmd: `git add . && git commit -m "add new crud"` },
+            utils.addScaffoldRecipieStep(args, 'crud'),
+            utils.gitCommitCmd(args, 'add new crud'),
         ],
-        data () {
-            return {
-                ...args,
-                srcRoot: endpointSrcRoot,
-                tableName: `model_${args.name.snakeCase}`,
-                fieldsCreateList,
-                fieldsNameReadList,
-                fieldsNameList,
-                fieldsArgsList,
-                fieldsUpdateList,
-                fieldsRecordArr,
-            }
-        }
+        data: {
+            ...args,
+            srcRoot: endpointSrcRoot,
+            tableName: `model_${args.name.snakeCase}`,
+            fieldsCreateList,
+            fieldsNameReadList,
+            fieldsNameList,
+            fieldsArgsList,
+            fieldsUpdateList,
+            fieldsRecordArr,
+        },
     };
 };

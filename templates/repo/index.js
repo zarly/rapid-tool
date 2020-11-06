@@ -1,12 +1,10 @@
 
-exports.getConfig = function getConfig (args) {
-    const { name } = args;
+exports.getConfig = function getConfig (args, cwd, utils) {
+    const dir = args.name;
     return {
         entities: [
-            { input: './package.json.ejs', output: `@/${name}/package.json` },
-            { input: './.gitignore', output: `@/${name}/.gitignore` },
-            { input: './.editorconfig.ejs', output: `@/${name}/.editorconfig` },
-            { cmd: `cd ${name} && git init && git add . && git commit -m init && cd -` },
+            { input: './files', output: `@/${dir}` },
+            utils.initCommitCmd(args, dir),
         ],
     };
 };

@@ -1,11 +1,10 @@
 
-const path = require('path');
-
-exports.getConfig = function getConfig (args) {
+exports.getConfig = function getConfig (args, cwd, utils) {
+    const dir = './scripts/telegram';
     return {
         entities: [
-            { cmd: `npm install --save axios` },
-            { cmd: `cp -R ${path.resolve(__dirname, 'files')}/. ./scripts/telegram` },
+            { input: './files', output: `@/${dir}` },
+            utils.installPackages(args, 'axios'),
         ],
     };
 };

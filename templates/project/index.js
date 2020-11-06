@@ -1,24 +1,15 @@
 
 const path = require('path');
 
-exports.getConfig = async function getConfig (args, cwd) {
+exports.getConfig = async function getConfig (args, cwd, utils) {
     const name = args.name;
     const dir = args.dir || args.name;
     const distAbsPath = path.resolve(cwd, dir, 'dist');
     
     return {
         entities: [
-            { cmd: `mkdir -p ${dir}` },
             { input: './files', output: `@/${dir}` },
-            { 
-                json: `@/${dir}/.scaffold/recipe.json`, 
-                modify (json) {
-                    json.init = {
-                        command: 'project',
-                        args: args,
-                    };
-                } 
-            },
+            utils.initScaffoldRecipie(args, dir, 'project'),
             { 
                 scaffold: path.resolve(__dirname, '..', 'api'),
                 cwd: path.resolve(path.join(cwd, dir)),
@@ -26,6 +17,7 @@ exports.getConfig = async function getConfig (args, cwd) {
                     name: `${name}-api`,
                     dir: 'api',
                     description: 'API package',
+                    inherited: true,
                 },
             },
             { 
@@ -35,6 +27,7 @@ exports.getConfig = async function getConfig (args, cwd) {
                     name: `${name}-web`,
                     dir: 'web',
                     description: 'Web Client package',
+                    inherited: true,
                 },
             },
             { 
@@ -44,6 +37,7 @@ exports.getConfig = async function getConfig (args, cwd) {
                     name: `${name}-admin`,
                     dir: 'admin',
                     description: 'Web Admin package',
+                    inherited: true,
                 },
             },
             { 
@@ -53,10 +47,11 @@ exports.getConfig = async function getConfig (args, cwd) {
                     name: `${name}-lib`,
                     dir: 'lib',
                     description: 'Web Lib package',
+                    inherited: true,
                 },
             },
-            args.skipDeps ? null : { cmd: `tar -xvf ${path.resolve(__dirname, 'deps.tar.gz')} -C ./${dir}` },
-            { cmd: `cd ${dir} && git init && git add . && git commit -m init && cd -` },
+            utils.initDependencies(args,  dir, path.resolve(__dirname, 'deps.tar.gz')),
+            utils.initCommitCmd(args, dir),
         ],
         data: {
             ...args,
