@@ -1,4 +1,12 @@
-import { db, DbType } from '../../datasources/<%- datasource %>'
+import { db, DbType } from '../../datasources/<%- datasource %>';
+
+export interface <%- name.classCase %>NewRecord {
+<%- fieldsInterface %>
+}
+
+export interface <%- name.classCase %>FullRecord extends <%- name.classCase %>NewRecord {
+    id?: number;
+}
 
 export class <%- name.classCase %> {
     db: DbType;
@@ -37,12 +45,12 @@ export class <%- name.classCase %> {
         return await this.db.query(query);
     }
 
-    async add (record: any) {
+    async add (record: <%- name.classCase %>NewRecord) {
         const query = 'INSERT INTO <%- tableName %>(<%- fieldsNameList %>) VALUES(<%- fieldsArgsList %>) RETURNING id';
         return await this.db.query(query, [<%- fieldsRecordArr %>]);
     }
 
-    async edit (id: number, record: any) {
+    async edit (id: number, record: <%- name.classCase %>FullRecord) {
         const query = 'UPDATE <%- tableName %> SET <%- fieldsUpdateList %> WHERE id = $1';
         return await this.db.query(query, [id, <%- fieldsRecordArr %>]);
     }
@@ -52,25 +60,31 @@ export class <%- name.classCase %> {
         return await this.db.query(query, [id]);
     }
 
-    async get (id: number) {
+    async get (id: number): Promise<<%- name.classCase %>FullRecord> {
         const query = 'SELECT <%- fieldsNameReadList %> FROM <%- tableName %> WHERE id = $1 LIMIT 1';
         const result = await this.db.query(query, [id]);
         return result.rows[0];
     }
 
-    async list (page?: number, pageSize?: number) {
+    async list (page?: number, pageSize?: number): Promise<<%- name.classCase %>FullRecord[]> {
         const query = 'SELECT <%- fieldsNameReadList %> FROM <%- tableName %> ORDER BY id LIMIT 5';
         const result = await this.db.query(query);
         return result.rows;
     }
 
-    async search (page?: number, pageSize?: number, filter?: any, projection?: any) {
+    async search (page?: number, pageSize?: number, filter?: any, projection?: any): Promise<<%- name.classCase %>FullRecord[]> {
         const query = 'SELECT <%- fieldsNameReadList %> FROM <%- tableName %> ORDER BY id LIMIT 5';
         const result = await this.db.query(query);
         return result.rows;
     }
 
-    async count (filter?: any, projection?: any) {
+    async searchByOneField (field: string, value: any): Promise<<%- name.classCase %>FullRecord[]> {
+        const query = `SELECT <%- fieldsNameReadList %> FROM <%- tableName %> WHERE ${field} = $1`;
+        const result = await this.db.query(query, [value]);
+        return result.rows;
+    }
+
+    async count (filter?: any, projection?: any): Promise<number> {
         const query = 'SELECT COUNT(*) FROM <%- tableName %>';
         const result = await this.db.query(query);
         return result.rows[0];
@@ -79,7 +93,7 @@ export class <%- name.classCase %> {
 
 export const <%- name.camelCase %> = new <%- name.classCase %>(db);
 
-export const initPromise = (async function () {
-    await <%- name.camelCase %>.deInit();
-    await <%- name.camelCase %>.init();
-})();
+// export const initPromise = (async function () {
+//     await <%- name.camelCase %>.deInit();
+//     await <%- name.camelCase %>.init();
+// })();

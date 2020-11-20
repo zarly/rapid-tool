@@ -4,9 +4,9 @@
   "description": "<%- description %>",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node-dev src/index.ts",
+    "start": "PORT=8000 ts-node-dev src/index.ts",
     "build": "tsc",
-    "test": "ts-mocha src/**/*.test.ts",
+    "test": "PORT=8001 ts-mocha src/tests/**/*.test.ts",
     "save-deps": "tar -czf deps.tar.gz node_modules/"
   },
   "license": "MIT",

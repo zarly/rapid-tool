@@ -6,7 +6,7 @@ exports.getConfig = function getConfig (args, cwd, utils) {
     return {
         entities: [
             { input: './files', output: `@/${dir}` },
-            utils.addScaffoldRecipieStep('web-svelte'),
+            utils.addScaffoldRecipieStep(args, 'web-svelte'),
             utils.initDependencies(args,  dir, path.resolve(__dirname, 'deps.tar.gz')),
             utils.initCommitCmd(args, dir),
         ],

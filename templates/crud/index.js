@@ -11,6 +11,7 @@ exports.getConfig = function getConfig (args, cwd, utils) {
     const fieldsArgsList = args.fields.map((it, n) => `$${n + 1}`).join();
     const fieldsUpdateList = args.fields.map((it, n) => `${it.name} = $${n + 2}`).join(', ');
     const fieldsRecordArr = args.fields.map(it => `record['${it.name}']`).join(', ');
+    const fieldsInterface = args.fields.map(it => `    ${it.name}?: any;`).join('\n');
 
     const endpointDir = `@/src/endpoints/${prefix}/${name.snakeCase}`.replace(/[\/]+/, '/');
     const modelPath = `@/src/models/${name.snakeCase}`;
@@ -37,6 +38,7 @@ exports.getConfig = function getConfig (args, cwd, utils) {
             fieldsArgsList,
             fieldsUpdateList,
             fieldsRecordArr,
+            fieldsInterface,
         },
     };
 };

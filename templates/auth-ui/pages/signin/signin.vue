@@ -31,6 +31,23 @@
         password: '',
       };
     },
+    methods: {
+      async submitForm () {
+        console.log('Submit');
+        const res = await fetch('/api/auth/signin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password,
+          }),
+        });
+        const data = await res.json();
+        console.log('data =', data);
+      },
+    },
   }
   </script>
   

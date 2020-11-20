@@ -1,8 +1,24 @@
 import { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
+import { user } from '../../models/user';
+import { session } from '../../models/session';
 
 export async function init () {
+    // await user.deInit();
+    await user.init();
 
+    // await session.deInit();
+    await session.init();
+}
+
+export function auth () {
+    return [
+        cookieParser(),
+        // function (req: Request, res: Response, next: (...args: any[]) => void) {
+        //     res.cookie('role', req.body.role, { maxAge: 900000, httpOnly: true });
+        //     next();
+        // },
+    ];
 }
 
 export function login () {
@@ -23,7 +39,7 @@ export function logout () {
     return [
         cookieParser(),
         function (req: Request, res: Response, next: (...args: any[]) => void) {
-            res.cookie('role', null, { maxAge: 0, httpOnly: true });
+            res.cookie('session', '', { expires: new Date(0), httpOnly: true });
             next();
         }
     ];
@@ -32,10 +48,29 @@ export function logout () {
 export function allowForRoles (roles: string[]) {
     return [
         cookieParser(),
-        function (req: Request, res: Response, next: (...args: any[]) => void) {
-            if (!req.cookies.role) {
-                res.sendStatus(401);
-            } else if (roles.indexOf(req.cookies.role) !== -1) {
+        async function (req: Request, res: Response, next: (...args: any[]) => void) {
+            const sessionId = req.cookies.session;
+            if (!sessionId) {
+                return res.sendStatus(401);
+            }
+            
+            const sessionRecs = await session.searchByOneField('session', sessionId);
+            if (!sessionRecs || !sessionRecs[0]) {
+                return res.sendStatus(401);
+            }
+            
+            const userRec = await user.get(sessionRecs[0].id!);
+            if (!userRec) {
+                return res.sendStatus(401);
+            }
+
+            if (roles[0] === 'any' || roles.indexOf(userRec.role) !== -1) {
+                (req as any).user = {
+                    name: userRec.name,
+                    email: userRec.email,
+                    role: userRec.role,
+                    created_at: userRec.created_at,
+                };
                 next();
             } else {
                 res.sendStatus(403);
