@@ -1,6 +1,5 @@
-import crypto from 'crypto';
 import { Request, Response } from 'express';
-import { auth } from '../../midlewares/auth';
+import { auth, generatePassHashPassword, generateSessionId } from '../../midlewares/auth';
 import { user } from '../../models/user';
 import { session } from '../../models/session';
 
@@ -18,9 +17,9 @@ export async function handler (req: Request, res: Response) {
         return;
     }
 
-    const passhash = crypto.pbkdf2Sync(req.body.password, rec.salt, 5, 64, `sha512`).toString(`hex`);
+    const passhash = generatePassHashPassword(req.body.password, rec.salt);
     if (passhash === rec.passhash) {
-        const sessionId = crypto.randomBytes(16).toString('hex'); 
+        const sessionId = generateSessionId();
         const sessionRes = await session.add({
             user_id: rec.id,
             session: sessionId,

@@ -1,11 +1,9 @@
-import crypto from 'crypto';
 import { Request, Response } from 'express';
-import { auth } from '../../midlewares/auth';
+import { auth, generatePassHashAndSalt } from '../../midlewares/auth';
 import { user } from '../../models/user';
 
 export async function handler (req: Request, res: Response) {
-    const salt = crypto.randomBytes(16).toString('hex'); 
-    const passhash = crypto.pbkdf2Sync(req.body.password, salt, 5, 64, `sha512`).toString(`hex`);
+    const { passhash, salt } = generatePassHashAndSalt(req.body.password);
 
     const response = await user.add({
         name: req.body.name,

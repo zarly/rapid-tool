@@ -10,7 +10,10 @@ describe('auth', function () {
   let server;
 
   beforeEach(async () => {
-    server = await start({ silent: true });
+    server = await start({
+      silent: true,
+      fullDbReset: true,
+    });
   });
 
   afterEach(() => {
@@ -82,5 +85,41 @@ describe('auth', function () {
 
     const res5 = await helpers.me({}, cookies4);
     expect(res5.status).equal(401);
+  });
+
+  it('change password works', async function () {
+    const res1 = await helpers.signUp();
+    expect(res1.status).equal(200);
+
+    const res2 = await helpers.signIn();
+    expect(res2.status).equal(200);
+    const cookies2 = helpers.parseSetCookies(res2);
+    
+    const res3 = await helpers.changePassword({ newPassword: '222' }, cookies2);
+    expect(res3.status).equal(200);
+    expect(res3.data.success).equal(true);
+
+    const res4 = await helpers.logout();
+    expect(res4.status).equal(200);
+    const cookies4 = helpers.parseSetCookies(res4, cookies2);
+    expect(cookies4.session).equal(undefined);
+
+    const res5 = await helpers.signIn();
+    expect(res5.status).equal(401);
+
+    const res6 = await helpers.signIn({ password: '222' });
+    expect(res6.status).equal(200);
+  });
+
+  it('change password not works with wrong password', async function () {
+    const res1 = await helpers.signUp();
+    expect(res1.status).equal(200);
+
+    const res2 = await helpers.signIn();
+    expect(res2.status).equal(200);
+    const cookies2 = helpers.parseSetCookies(res2);
+    
+    const res3 = await helpers.changePassword({ oldPassword: '222' }, cookies2);
+    expect(res3.status).equal(403);
   });
 });

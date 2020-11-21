@@ -25,6 +25,18 @@ export function logout(params: any = {}) {
     return axios.post(HOST + '/auth/logout').catch(it => it.response);
 }
 
+export function changePassword(params: any = {}, cookies: any) {
+    return axios.post(HOST + '/auth/change-password', {
+      oldPassword: '111',
+      newPassword: '111',
+        ...params,
+    }, {
+        headers: {
+            Cookie: buildCookieHeader(cookies),
+        }
+    }).catch(it => it.response);
+}
+
 export function me(params: any = {}, cookies: any) {
     return axios.get(HOST + '/auth/me', {
         headers: {
