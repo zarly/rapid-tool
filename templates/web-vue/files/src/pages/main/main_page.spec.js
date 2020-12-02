@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import { expect } from 'chai';
-import Page from './<%- name.snakeCase %>_page';
+import Page from './main_page';
 
-describe('<%- name.classCase %>Page', function () {
+describe('MainPage', function () {
   it('should renders without errors', () => {
     const Constructor = Vue.extend(Page);
     const vm = new Constructor().$mount();
