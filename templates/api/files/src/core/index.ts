@@ -1,5 +1,5 @@
 import path from 'path';
-import clc from 'cli-color';
+import clc from 'chalk';
 import express, { Express } from 'express';
 import bodyParser from 'body-parser';
 import { deepDispatcher, flatDispatcher } from './dispatcher';

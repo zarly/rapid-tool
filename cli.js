@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const clc = require('cli-color');
+const clc = require('chalk');
 const yargs = require('yargs');
 const { runAction } = require('./index');
 
