@@ -38,12 +38,14 @@ exports.addScaffoldRecipieStep = function addScaffoldRecipieStep (args, command)
     return {
         json: `@/.scaffold/recipe.json`,
         modify (json) {
+            if (!json.updates) json.updates = [];
             json.updates.push({
                 command,
                 args,
             });
         },
         revert (json) {
+            if (!json.updates) json.updates = [];
             json.updates.push({
                 command,
                 args,
